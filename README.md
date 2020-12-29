@@ -62,6 +62,24 @@ To make sure tensorflow is installed correctly, I have included a `/test/test_tf
 
 As you start working with Python, you will get little pop-ups that ask if you want to install a linter, extensions, etc. These are all good and you should install them. If it asks whether to install through pip or conda, you can pick either. I usually use conda but it totally doesn't matter.
 
+Right now turret-soft can be either run as a script, or installed via setuptools.
+
+To run it as a script, you will have to configure VSCode to run python files. This sounds hard but its super easy.
+
+First, open the file we want to run, such as `/turret-soft/turret_soft/__main__.py` which is our main entry point.
+
+Click the debug icon on the left side of the window. Now click the "Run and Debug" button. (Alternatively just hit `F5`).
+A popup will ask what kind of debugging environment do we want. Click "Python" and then click "Python File". The code should execute!
+
+When run directly like this, the `main()` function is executed through the section:
+```python
+if __name__ == '__main__':
+    main()
+```
+Which is a convoluted but standard way of saying "if I've been executed directly, just run `main()`.
+
+To run the script more like a standard application, check out the setuptools installation instructions below:
+
 ## Install Locally in Edit/Debug Mode
 To install turret-soft locally, we're going to use the python setuptools package, which should be installed by default.
 Setuptools basically packages python modules/packages so they can be run from the command line as if they were binary installs.
@@ -105,6 +123,8 @@ Let's attach a debug session.
 In VSCode, click the little debug icon on the left side of the screen. Under the "Run and Debug" button you'll see something about creating a launch.json file. Click that.
 
 From the drop down, select `Python`, and then select `Remote Attach`. Hit enter twice to accept `localhost` and `5678` as the debug session address. VSCode automatically creates a remote attach debug json configuration for us. Save and close the json file.
+
+Note: If you want, you can also add a python file configuration at this point. Simply click "Add Configuration" in the json file and select Python -> Python File. You can now choose between debug configs using a drop-down in the debug menu.
 
 Now lets add a breakpoint. Open the `/turret-soft/turret_soft/__main__.py` file and click to the left of the print line to add a breakpoint.
 
