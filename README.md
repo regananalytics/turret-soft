@@ -1,7 +1,6 @@
 # turret-soft
 Operating Software and resources for an Automated Nerf Turret
 
-
 # Resources
 ## Hardware
 [Jetson Nano *OWNED*](https://developer.nvidia.com/embedded/jetson-nano-developer-kit)
@@ -114,3 +113,10 @@ In your command line, go ahead and execute `turret` again. See how it pauses. Cl
 Note: It is imperative that both the VSCode Interpretor and the command line you are using are on the same conda environment, or this will not work!
 
 Just remember to remove the `import vsdbg_ez` from the `__init__.py` file before pushing your code back into the repository. I forget every time, to be honest, so I will create a script to do this automatically down the road.
+
+
+## Install Docker
+Installing docker is different depending on your os. Follow the instructions here:
+[Get Docker](https://docs.docker.com/get-docker/)
+
+Also, be sure to complete the post-install instructions. They are essential.
