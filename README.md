@@ -120,3 +120,9 @@ Installing docker is different depending on your os. Follow the instructions her
 [Get Docker](https://docs.docker.com/get-docker/)
 
 Also, be sure to complete the post-install instructions. They are essential.
+
+To see how the docker stuff works, open `/turret-soft/Dockerfile` which I've commented heavily.
+The comments will instruct you how to both build and run the dockerfile.
+
+I cannot recommend the [VSCode docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) enough. It's a super convenient interface for managing images, containers, volumes, etc.
+You can even install vscode *inside* of a container and debug code within. We can go over that junk later.
