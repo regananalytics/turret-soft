@@ -99,6 +99,24 @@ When you install the package, you'll see two new folders appear in `/turret-soft
 
 To test that it installed properly, run `turret` in a terminal to check for the expected output. Right now, the turret will just ask "Hellooo?"
 
+What's happening is this... Setuptools creates a fake binary file in your user bin called `turret`, which is called when you type `turret` in your command line. This file is actually a python file that calls whatever function we have decided is the entry point of our python code. If you open the `/turret-soft/setup.py` you'll see this has been configured to run the `main()` function in `/turret-soft/turret_soft/__main__.py`:
+
+```python
+setup(
+    name='turret-soft',
+    version=__about__.__version__,
+    pacakges=find_packages(),
+    entry_points={
+        'console_scripts': [
+            'turret = turret_soft.__main__:main'
+        ]
+    },
+    install_requires=[],
+)
+```
+
+We can add as many entry points as we want and tie them to different cli commands, or we can add arguments to our calls to configure it in different ways. More on that later on. For now, we just execute the `main()` function which prints to our terminal.
+
 ### Debug with VSDBG
 This is great, but its not really debuggable yet. I've created a package called `vsdbg` that makes debugging installed packages much easier.
 
