@@ -11,6 +11,6 @@ setup(
         ]
     },
     install_requires=[
-        'tensorflow',
+#        'tensorflow',
     ]
 )
