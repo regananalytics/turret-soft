@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-from . import __about__
+import __about__
 
 setup(
     name='turret-soft',
@@ -10,7 +10,7 @@ setup(
             'turret = turret_soft.__main__:main'
         ]
     },
-    install_requires={
+    install_requires=[
         'tensorflow',
-    }
+    ]
 )
