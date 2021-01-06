@@ -1,6 +1,73 @@
 # turret-soft
 Operating Software and resources for an Automated Nerf Turret
 
+# CONOPS
+The concept of operations for the turret are as follows:
+```
+         STARTUP
+            v
+IDLE <-> SEARCH <-> TRACK <-> ENGAGE
+...
+ERROR -> SHUTDOWN
+```
+
+## STARTUP MODE
+Initializes turret software and hardware. <br>
+Success -> SEARCH <br>
+Failure (Error) -> ERROR -> SHUTDOWN <br>
+Error -> ERROR -> SHUTDOWN
+
+## SEARCH MODE
+Object detection mode. Search for targets. <br>
+Success -> TRACK <br>
+Failure (Timeout) -> IDLE <br>
+Error -> ERROR -> SHUTDOWN
+
+## TRACK MODE
+Track detected object and determine path. <br>
+Success -> ENGAGE <br>
+Failure (Timeout/Loss of track) -> SEARCH <br>
+Error -> ERROR -> SHUTDOWN
+
+## ENGAGE MODE
+Engage target, continue to track. <br>
+Success -> ENGAGE <br>
+Failure (Timeout, Loss of Track, Target obscured) -> TRACK <br>
+Error -> ERROR -> SHUTDOWN
+
+## IDLE MODE
+Minimum power mode. Low framerate motion detection <br>
+Success -> SEARCH <br>
+Failure (Timeout) -> SHUTDOWN <br>
+Error -> ERROR -> SHUTDOWN
+
+## ERROR MODE
+Error logging <br>
+Success/Failure -> SHUTDOWN
+
+## SHUTDOWN MODE
+Shutdown turret.
+
+
+# MODE Anatomy
+Each mode inherits from the MODE class, which defines the anatomy and functionality of a MODE. <br>
+Modes have one primary function, `main()`, which calls three run stages, `intro`, `body`, and `outro`. <br>
+Each of these stages return a boolean: True for success, False for failure.
+The logic of the main function is always:
+
+```python
+def main(self, *args, **kwargs):
+    # Main function logic
+    if (result := self.intro(*args, **kwargs)):
+        # If intro succeeds, run the body
+        result = self.body(*args, **kwargs)
+    # Save result
+    self.result = result
+    # Run outro always
+    self.outro(*args, **kwargs)
+```
+
+
 # Resources
 ## Hardware
 [Jetson Nano *OWNED*](https://developer.nvidia.com/embedded/jetson-nano-developer-kit)
@@ -24,6 +91,7 @@ Tracking can be done natively in python using a kalman tracker or something simp
 We should totally have these sounds play whenever things happen.
 I have copied most of these into categories in the `/audio` directory.
 
+[PulseAudio from Docker](https://askubuntu.com/questions/972510/how-to-set-alsa-default-device-to-pulseaudio-sound-server-on-docker)
 
 # Development Installation
 This project uses git for source control and github to host the repo.
@@ -69,7 +137,8 @@ To run it as a script, you will have to configure VSCode to run python files. Th
 First, open the file we want to run, such as `/turret-soft/turret_soft/__main__.py` which is our main entry point.
 
 Click the debug icon on the left side of the window. Now click the "Run and Debug" button. (Alternatively just hit `F5`).
-A popup will ask what kind of debugging environment do we want. Click "Python" and then click "Python File". The code should execute!
+A popup will ask what kind of debugging environment do we want. Click "Python" and then click "Python Module".
+When prompted for a module name, type `turret-soft.turret_soft`, since that is the address of our module from the root of the repo.
 
 When run directly like this, the `main()` function is executed through the section:
 ```python
@@ -77,6 +146,9 @@ if __name__ == '__main__':
     main()
 ```
 Which is a convoluted but standard way of saying "if I've been executed directly, just run `main()`.
+
+Note: The Python -> Python File debug mode is great too, but doesn't work if you use relative imports.
+Relative imports are fantastic, though, so its worth the extra trouble to use Python Module instead.
 
 To run the script more like a standard application, check out the setuptools installation instructions below:
 
