@@ -6,7 +6,10 @@ clean:
 
 
 build:
-	docker build . -t turret_soft:latest
+	docker build ./turret-soft/turret_soft/docker/ -t danregan/turret_soft:latest
+
+push:
+	docker push danregan/turret_soft:latest
 
 
 run:
